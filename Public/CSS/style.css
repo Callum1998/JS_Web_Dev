@@ -1,0 +1,8 @@
+h1{border-color: crimson; border-style: solid none solid none; text-align: center;}
+
+p{color: darkslategrey; margin-left: 30px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+
+button{display: inline-block; padding: 15px 20px; font-size: 24 px; border-style: none; background-color: rgb(31, 180, 63); outline: none; text-align: center; cursor: pointer;
+text-decoration: none; border-radius: 15px; box-shadow: 0 9px #999;}
+button:hover {background-color: rgb(80, 110, 30);}
+button:active {background-color: rgb(9, 46, 6); box-shadow: 0 5px #464545; transform: translateY(4px);}
