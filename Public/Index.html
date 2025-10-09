@@ -1,104 +1,116 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-    <head>
-        <title>
-            JS Dev - Bootstrap 5
-        </title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-                <div class="container-fluid">
-                    <!--Links-->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link 1</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link 2</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link 3</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Link 4</a>
-                        </li>
-                    </ul>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <title>JS Dev - Week 4</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javaScript" src="JS/main.js"></script>
+  </head>
 
-                </div>
-        </nav>
+  <body onload="initialise()">
+    <h1>Testing JavaScript</h1>
+    <h3>Changing HTML Element from JS</h3>
+    <p>This project will be used to ge familiar with JavaScript.</p>
+    <p id="printHere">Default Text</p>
 
-        <div class="container-fluid p-5 bg-primary text-white text-center">
-            <h1>This is a Heading</h1>
-            <p>This container will resize with the window size.</p>
-        </div>
+    <h3>Date and Time</h3>
+    <p id="dateTime">Date/Time here</p>
+    <button type="button" onclick="dateTime()">What is the Current Time</button>
 
+    <h3>Task 6: Shopping List</h3>
+    <form action="">
+      <fieldset>
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+          </tr>
+          <tr>
+            <td>Apples</td>
+            <td><input type="number" name="entry" id="e1" value="2" /></td>
+          </tr>
+          <tr>
+            <td>Bunch of Grapes</td>
+            <td><input type="number" name="entry" id="e2" value="3" /></td>
+          </tr>
+          <tr>
+            <td>Oranges</td>
+            <td><input type="number" name="entry" id="e3" value="3" /></td>
+          </tr>
+        </table>
+        <p>Discount</p>
+        <input type="number" name="discount" id="d1" value="25" />
+        <input type="button" value="calculate" onclick="totup(this.form)" />
+      </fieldset>
+    </form>
+    <p>Total Cost <span id="totalled"></span></p>
 
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Column 1</h3>
-                    <p>This is row container element 1...</p>
-                    <p>...With multiple paragraphs</p>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Column 2</h3>
-                    <p>This is row container element 2...</p>
-                    <p>...With multiple paragraphs, again.</p>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Column 2</h3>
-                    <p>This is row container element 3...</p>
-                    <p>...you get the point.</p>
-                </div>
-            </div>
-        </div>
+    <h3>Task 7: Weekly Shopping</h3>
+    <form action="">
+      <fieldset>
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Price &pound;</th>
+          </tr>
+          <tr>
+            <td>Milk</td>
+            <td><input type="number" name="entry" id="e1" value="0.90" /></td>
+          </tr>
+          <tr>
+            <td>Bread</td>
+            <td><input type="number" name="entry" id="e2" value="0.85" /></td>
+          </tr>
+          <tr>
+            <td>Cold Meat</td>
+            <td><input type="number" name="entry" id="e3" value="1.75" /></td>
+          </tr>
+          <tr>
+            <td>Milk</td>
+            <td><input type="number" name="entry" id="e1" value="1.10" /></td>
+          </tr>
+          <tr>
+            <td>Bread</td>
+            <td><input type="number" name="entry" id="e2" value="1.75" /></td>
+          </tr>
+          <tr>
+            <td>Cold Meat</td>
+            <td><input type="number" name="entry" id="e3" value="1.10" /></td>
+          </tr>
+          <tr>
+            <td>Potatoes</td>
+            <td><input type="number" name="entry" id="e1" value="1.50" /></td>
+          </tr>
+          <tr>
+            <td>Cheese</td>
+            <td><input type="number" name="entry" id="e2" value="2.60" /></td>
+          </tr>
+          <tr>
+            <td>Fish</td>
+            <td><input type="number" name="entry" id="e3" value="3.25" /></td>
+          </tr>
+          <tr>
+            <td>Bacon</td>
+            <td><input type="number" name="entry" id="e3" value="1.60" /></td>
+          </tr>
+        </table>
+        <p>Discount</p>
+        <input type="number" name="discount" id="d1" value="40" />
+        <input type="button" value="calculate" onclick="totup2(this.form)" />
+      </fieldset>
+    </form>
+    <p>Total Cost <span id="totalled2"></span></p>
 
-        <!--Carousel-->
-        <div id="demo" class="carousel slide" data-bs-ride="carousel">
-            <!--Carousel Indicators-->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="1" class="active"></button>
-                <button type="button" data-bs-target="#demo" data-bs-slide-to="2" class="active"></button>
-            </div>
+    <h3>Roll a Die</h3>
 
-            <!--Slideshow-->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="Assets/benlomond.jpg" alt="Ben Lomond" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Ben Lomond</h3>
-                        <p>On the bonnie banks</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="Assets/bennevis.jpg" alt="Ben Nevis" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>Ben Nevis</h3>
-                        <p>Tallest in Scotland</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="Assets/cairngorms.jpg" alt="Cairngorms" class="d-block w-100">
-                    <div class="carousel-caption">
-                        <h3>The Cairngorms</h3>
-                        <p>Form the highest peaks to the lowest valleys</p>
-                    </div>
-                </div>
-            </div>
-
-            <!--Left and Right Button Controls/Icons-->
-            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
-
-        </div>
-    </body>
+    <img id="dice" src="images/dice-1.png" alt="dice" /><br /><br />
+    <button type="button" onclick="roll(document.getElementById('dice'));">
+      Roll
+    </button>
+  </body>
 </html>
