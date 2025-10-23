@@ -53,3 +53,5 @@ function roll(imgElement) {
   imgElement.src = faces[number].src;
   console.log(number);
 }
+
+
