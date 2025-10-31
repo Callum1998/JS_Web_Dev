@@ -1,4 +1,5 @@
 import { initEngine, setActiveScene, startRenderLoop } from "./core/engine";
+import { createSolarSystem } from "./scenes/element1_solarsystem";
 import { BABYLON } from "./core/utils";
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -14,17 +15,16 @@ window.addEventListener("DOMContentLoaded", () => {
   const camera = new BABYLON.ArcRotateCamera("cam", 0, 0, 5, BABYLON.Vector3.Zero(), scene);
   camera.attachControl(canvas, true);
 
-  // 4️⃣ Light
-  const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+  scene.ambientColor = new BABYLON.Color3(0.1,0.1,0.1);
+  const glow = new BABYLON.GlowLayer("glow", scene);
+  glow.intensity = 0.6;
 
   // 5️⃣ Meshes
-  const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
-  sphere.position = new BABYLON.Vector3(0, 0, 0);
+  const solarBodies = createSolarSystem(scene);
 
   // 6️⃣ Activate scene & start render loop
   setActiveScene(scene);
   startRenderLoop(() => {
-    sphere.rotation.y += 0.01; // optional animation
   });
 
   // 7️⃣ Hide loading overlay
@@ -36,7 +36,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // 8️⃣ Debug info
   scene.debugLayer.show();
-  console.log("Sphere visible:", sphere.isVisible);
   console.log("Camera position:", camera.position.toString());
   console.log("Camera target:", camera.target.toString());
   console.log("Scene active meshes:", scene.getActiveMeshes().length);
