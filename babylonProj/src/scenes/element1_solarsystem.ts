@@ -11,6 +11,18 @@ interface CelestialBody {
 export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
     const bodies: CelestialBody[] = [];
 
+    // Create a large inverted sphere as a starfield background
+    const skyDome = BABYLON.MeshBuilder.CreateSphere("skyDome", { segments: 64, diameter: 200 }, scene);
+    // Apply material to show stars on the inside
+    const skyMat = new BABYLON.StandardMaterial("skyMat", scene);
+    skyMat.backFaceCulling = false; // render inside faces
+    skyMat.diffuseTexture = new BABYLON.Texture("/assets/textures/space.jpg", scene);
+    skyMat.diffuseTexture.coordinatesMode = BABYLON.Texture.FIXED_EQUIRECTANGULAR_MODE;
+    skyMat.emissiveColor = new BABYLON.Color3(0.01, 0.01, 0.01); // so it glows regardless of lighting
+
+    skyDome.material = skyMat;
+
+
     // Create the Sun
     const sun = BABYLON.MeshBuilder.CreateSphere("Sun", {diameter: 2}, scene);
     const sunMat = new BABYLON.StandardMaterial("sunMat", scene);
@@ -31,11 +43,15 @@ export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
 
     // Setting up the planets
     const planetData = [
-        { name: "mercury", size: 0.3, distance: 3, speed: 0.002, colour: new BABYLON.Color3(0.6, 0.6, 0.6), diffuse: "mercury.jpg"},
-        { name: "venus", size: 0.5, distance: 5, speed: 0.0015, colour: new BABYLON.Color3(0.9, 0.7, 0.4), diffuse: "venus.jpg"},
-        { name: "earth", size: 0.6, distance: 7, speed: 0.001, colour: new BABYLON.Color3(0.2, 0.5, 1), diffuse: "earth.jpg"},
-        { name: "mars", size: 0.4, distance: 9, speed: 0.0008, colour: new BABYLON.Color3(1, 0.3, 0.3), diffuse: "mars.jpg"},
-        { name: "saturn", size: 1, distance: 12, speed: 0.0005, colour: new BABYLON.Color3(0.9, 0.8, 0.5), diffuse: "saturn.jpg"},
+        { name: "mercury", size: 0.3, distance: 3, speed: 0.002, diffuse: "mercury.jpg"},
+        { name: "venus", size: 0.5, distance: 5, speed: 0.0015, diffuse: "venus.jpg"},
+        { name: "earth", size: 0.6, distance: 7, speed: 0.001, diffuse: "earth.jpg"},
+        { name: "mars", size: 0.4, distance: 9, speed: 0.0008, diffuse: "mars.jpg"},
+        { name: "jupiter", size: 1.2,  distance: 12, speed: 0.0012, diffuse: "jupiter.jpg" },
+        { name: "saturn", size: 1, distance: 16, speed: 0.0005, diffuse: "saturn.jpg"},
+        { name: "uranus",  size: 0.8,  distance: 20, speed: 0.0008, diffuse: "uranus.jpg"},
+        { name: "neptune", size: 0.75, distance: 24, speed: 0.0007, diffuse: "neptune.jpg"},
+        { name: "pluto",   size: 0.2,  distance: 28, speed: 0.0006, diffuse: "pluto.jpg"},
     ];
 
     planetData.forEach((p) => {
@@ -79,7 +95,7 @@ export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
         if (p.name === "saturn") {
             const ring = BABYLON.MeshBuilder.CreateTorus(
                 "SaturnRing",
-                { diameter: 2, thickness: 0.05, tessellation: 50 },
+                { diameter: 2, thickness: 0.05, tessellation: 50},
                 scene
             );
             ring.parent = planet;
