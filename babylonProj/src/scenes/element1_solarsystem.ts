@@ -12,13 +12,13 @@ export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
     const bodies: CelestialBody[] = [];
 
     // Create a large inverted sphere as a starfield background
-    const skyDome = BABYLON.MeshBuilder.CreateSphere("skyDome", { segments: 64, diameter: 200 }, scene);
+    const skyDome = BABYLON.MeshBuilder.CreateSphere("skyDome", { segments: 64, diameter: 100 }, scene);
     // Apply material to show stars on the inside
     const skyMat = new BABYLON.StandardMaterial("skyMat", scene);
     skyMat.backFaceCulling = false; // render inside faces
     skyMat.diffuseTexture = new BABYLON.Texture("/assets/textures/space.jpg", scene);
     skyMat.diffuseTexture.coordinatesMode = BABYLON.Texture.FIXED_EQUIRECTANGULAR_MODE;
-    skyMat.emissiveColor = new BABYLON.Color3(0.01, 0.01, 0.01); // so it glows regardless of lighting
+    skyMat.emissiveColor = new BABYLON.Color3(0.05, 0.05, 0.05); // so it glows regardless of lighting
 
     skyDome.material = skyMat;
 
