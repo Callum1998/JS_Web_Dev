@@ -11,6 +11,41 @@ interface CelestialBody {
 export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
     const bodies: CelestialBody[] = [];
 
+    // Scene Settings
+    scene.clearColor = new BABYLON.Color4(0.2, 0.2, 0.2, 1);
+    const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
+
+    const camera = new BABYLON.ArcRotateCamera(
+    "cam",
+     -Math.PI / 2,
+     Math.PI / 2.5,
+     30,
+    BABYLON.Vector3.Zero(), 
+    scene
+  );
+  camera.attachControl(canvas, true);
+
+  camera.inertia = 0.8;
+  camera.panningInertia = 0.9;
+
+  // limit zoom so you don’t clip through planets
+  camera.lowerRadiusLimit = 5;
+  camera.upperRadiusLimit = 200;
+
+  // better zoom speed curve
+  camera.wheelPrecision = 50;
+  camera.pinchPrecision = 100;
+
+  scene.ambientColor = new BABYLON.Color3(0.1,0.1,0.1);
+  const glow = new BABYLON.GlowLayer("glow", scene);
+  glow.intensity = 0.6;
+
+  const hemiLight = new BABYLON.HemisphericLight("ambientLight", new BABYLON.Vector3(0, 1, 0), scene);
+  hemiLight.intensity = 0.15; // keep it very soft
+  hemiLight.diffuse = new BABYLON.Color3(0.4, 0.4, 0.5); // cool tone for space feel
+  hemiLight.groundColor = new BABYLON.Color3(0.1, 0.1, 0.15);
+  hemiLight.specular = new BABYLON.Color3(0, 0, 0); // prevent extra shininess
+
     // Create a large inverted sphere as a starfield background
     const skyDome = BABYLON.MeshBuilder.CreateSphere("skyDome", { segments: 64, diameter: 100 }, scene);
     // Apply material to show stars on the inside
@@ -86,7 +121,7 @@ export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
 
             const moonMat = new BABYLON.StandardMaterial("moonMat", scene);
             moonMat.diffuseTexture = new BABYLON.Texture(`/assets/textures/moon.jpg`, scene, false, false);
-            moonMat.bumpTexture = new BABYLON.Texture(`/assets/heightmaps/moonHeight.jpg`, scene);
+            moonMat.bumpTexture = new BABYLON.Texture(`/assets/heightmaps/moonHeight.png`, scene);
             moonMat.bumpTexture.level = 0.5;
 
             moons.push({ mesh: moon, pivot: moonPivot, orbitSpeed: 0.003 });
