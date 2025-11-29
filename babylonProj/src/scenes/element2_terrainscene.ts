@@ -11,7 +11,7 @@ scene.fogDensity = 0.0075;
 scene.fogColor = new BABYLON.Color3(0.6, 0.7, 0.8);
 
 /* Camera Settings */
-const camera = new BABYLON.UniversalCamera("playerCam", new BABYLON.Vector3(0, 20, -20), scene);
+const camera = new BABYLON.UniversalCamera("playerCam", new BABYLON.Vector3(0, 18, -20), scene);
 camera.attachControl(true);
 camera.speed = 0.45;
 camera.inertia = 0.15;
@@ -40,9 +40,11 @@ const hemi = new BABYLON.HemisphericLight("ambient", new BABYLON.Vector3(0,1,0),
 hemi.intensity = 0.25;
 
 /* Sky Sphere (360 degrees) */
-const sky = BABYLON.CreateSphere("sky", {diameter: 1000, sideOrientation: BABYLON.Mesh.BACKSIDE}, scene);
+const sky = BABYLON.CreateSphere("sky", {diameter: 200, sideOrientation: BABYLON.Mesh.BACKSIDE}, scene);
 const skyMat = new BABYLON.StandardMaterial("skyMat", scene);
-skyMat.diffuseTexture = new BABYLON.Texture("/assets/textures/space.jpg", scene);
+const skyTex = new BABYLON.Texture("/assets/textures/skybox.png", scene);
+skyTex.vScale = -1;
+skyMat.diffuseTexture = skyTex;
 skyMat.backFaceCulling = false;
 sky.material = skyMat;
 

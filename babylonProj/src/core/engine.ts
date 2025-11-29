@@ -19,7 +19,8 @@ export function initEngine(canvasId: string = "renderCanvas"): BABYLON.Engine {
 
     engine = new BABYLON.Engine(canvas, true, {
         preserveDrawingBuffer: true,
-        stencil:true,
+        stencil: true,
+        alpha: true
     });
 
     // Handle browser resize

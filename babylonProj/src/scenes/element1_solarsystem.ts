@@ -8,8 +8,8 @@ interface CelestialBody {
     moons?: CelestialBody[];
 }
 
-export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
-    const bodies: CelestialBody[] = [];
+export function createSolarSystemScene(engine: BABYLON.Engine): BABYLON.Scene {
+    const scene = new BABYLON.Scene(engine);
 
     // Scene Settings
     scene.clearColor = new BABYLON.Color4(0.2, 0.2, 0.2, 1);
@@ -45,6 +45,13 @@ export function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
   hemiLight.diffuse = new BABYLON.Color3(0.4, 0.4, 0.5); // cool tone for space feel
   hemiLight.groundColor = new BABYLON.Color3(0.1, 0.1, 0.15);
   hemiLight.specular = new BABYLON.Color3(0, 0, 0); // prevent extra shininess
+
+    createSolarSystem(scene);
+    return scene;
+}
+
+function createSolarSystem(scene: BABYLON.Scene): CelestialBody[] {
+    const bodies: CelestialBody[] = [];
 
     // Create a large inverted sphere as a starfield background
     const skyDome = BABYLON.MeshBuilder.CreateSphere("skyDome", { segments: 64, diameter: 100 }, scene);

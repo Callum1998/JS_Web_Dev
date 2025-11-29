@@ -1,13 +1,11 @@
-import { getEngine, getActiveScene, setActiveScene } from "./engine";
 import { BABYLON } from "./utils";
 
-export async function loadScene(SceneBuilder: (engine: BABYLON.Engine) => BABYLON.Scene) {
-    const engine = getEngine();
+let activeScene: BABYLON.Scene;
 
-    // Dispose of old scene if one exists
-    const oldScene = BABYLON.EngineStore.LastCreatedScene;
-    if (oldScene) oldScene.dispose();
+export function setActiveScene(scene: BABYLON.Scene) {
+    activeScene = scene;
+}
 
-    const newScene = SceneBuilder(engine);
-    setActiveScene(newScene);
+export function getActiveScene() {
+    return activeScene;
 }
