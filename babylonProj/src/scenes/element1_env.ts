@@ -26,7 +26,11 @@ import {
     ShadowGenerator,
     Axis,
     Camera,
-    Vector2
+    Vector2,
+    Sound,
+    CreateAudioEngineAsync,
+    CreateSoundAsync,
+    StaticSound
 } from "@babylonjs/core";
 import { WaterMaterial } from "@babylonjs/materials";
 
@@ -246,6 +250,9 @@ export function createEnvScene(engine: Engine){
         camera: UniversalCamera;
         sunLight: DirectionalLight;
         water: Mesh;
+        audio: StaticSound;
+        startAudio?: () => void;
+        stopAudio?: () => void;
     }
 
     let that = {} as SceneData;
@@ -269,6 +276,24 @@ export function createEnvScene(engine: Engine){
         scatterTreesOnTerrain(that.terrain, mergedTree, that.shadowGen);
     })
     let camera = createCamera(that.scene);
+
+    (async () => {
+        const audioEngine = await CreateAudioEngineAsync({volume: 0.3});
+
+        await audioEngine.unlockAsync();
+        const bgMusic = await CreateSoundAsync("bg", "/assets/audio/EnvAudio.wav", {loop: true});
+        that.audio = bgMusic;
+
+        that.startAudio = () => {
+            console.log("Starting EnvAudio");
+            bgMusic.play();
+        };
+
+        that.stopAudio = () => {
+            console.log("Stopping EnvAudio");
+            bgMusic.stop();
+        };
+    })();
 
     return that;
 }

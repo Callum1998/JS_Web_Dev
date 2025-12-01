@@ -1,6 +1,6 @@
 import { ArcRotateCamera, Camera, Engine, Scene, Vector3 } from "@babylonjs/core";
 import * as GUI from "@babylonjs/gui";
-import setSceneIndex from "../main"
+import { setSceneIndex, scenes } from "../main"
 
 
 function createSceneButton(scene: Scene, name: string, note: string, index: number, x: string, y: string, advtex: GUI.AdvancedDynamicTexture) {

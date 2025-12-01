@@ -1,4 +1,4 @@
-import { Engine } from "@babylonjs/core"
+import { Engine, Scene, Sound, StopSoundAction } from "@babylonjs/core"
 import { createEnvScene } from "./scenes/element1_env";
 import { createSolarScene } from "./scenes/element2_solar";
 import menuScene from "./scenes/element4_gui";
@@ -12,7 +12,7 @@ canvas.classList.add("background-canvas");
 document.body.appendChild(canvas);
 
 let scene;
-let scenes: any[] = [];
+export let scenes: any[] = [];
 
 let eng = new Engine(canvas, true, {}, true);
 let gui = menuScene(eng);
@@ -20,13 +20,22 @@ scenes[0] = createSolarScene(eng);
 scenes[1] = createEnvScene(eng);
 
 scene = scenes[0].scene;
-setSceneIndex(0);
+let currentSceneIndex = 0;
+scenes[currentSceneIndex].startAudio?.();
 
-export default function setSceneIndex(i: number) {
-    eng.runRenderLoop(() => {
-        scenes[i].scene.render();
+
+export function setSceneIndex(i: number) {
+    const oldScene = scenes[currentSceneIndex];
+    oldScene?.stopAudio?.();
+    
+    currentSceneIndex = i;
+
+    const newScene = scenes[currentSceneIndex];
+    newScene?.startAudio?.();
+}
+
+eng.runRenderLoop(() => {
+        scenes[currentSceneIndex].scene.render();
         gui.scene.autoClear = false;
         gui.scene.render();
     });
-}
-

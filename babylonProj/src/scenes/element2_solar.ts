@@ -1,4 +1,4 @@
-import { ArcRotateCamera, Color3, Color4, Engine, GlowLayer, HemisphericLight, Light, Mesh, MeshBuilder, PointLight, Scene, StandardMaterial, Texture, TransformNode, Vector3 } from "@babylonjs/core";
+import { ArcRotateCamera, Color3, Color4, CreateAudioEngineAsync, CreateSoundAsync, Engine, GlowLayer, HemisphericLight, Light, Mesh, MeshBuilder, PointLight, Scene, StandardMaterial, Texture, TransformNode, Vector3 } from "@babylonjs/core";
 
 export function createSolarScene(engine: Engine) {
 
@@ -8,6 +8,8 @@ export function createSolarScene(engine: Engine) {
         glow: GlowLayer;
         hemi: HemisphericLight;
         sky: Mesh;
+        startAudio?: () => void;
+        stopAudio?: () => void;
     }
 
     let that = {} as SceneData;
@@ -22,6 +24,24 @@ export function createSolarScene(engine: Engine) {
     that.sky = createSkyDome(that.scene);
 
     createSolarSystem(that.scene);
+
+    (async () => {
+        const audioEngine = await CreateAudioEngineAsync({volume: 0.3});
+
+        await audioEngine.unlockAsync();
+        const bgMusic = await CreateSoundAsync("bg", "/assets/audio/SolarAudio.wav", {loop: true});
+
+        that.startAudio = () => {
+            console.log("Starting SolarAudio");
+            bgMusic.play();
+        };
+
+        that.stopAudio = () => {
+            console.log("Stopping SolarAudio");
+            bgMusic.stop();
+        };
+    })();
+
     return that;
 }
 
