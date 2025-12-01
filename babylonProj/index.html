@@ -6,27 +6,6 @@
         <title>BabylonJS Showcase</title>
         <link rel="stylesheet" href="./src/styles/main.css" />
     </head>
-
-    <body>
-        <!-- Babylon Canvas -->
-        <canvas id="renderCanvas"></canvas>
-
-        <!-- Loading Overlay -->
-        <div id="loadingOverlay">Loading BabylonJS Showcase...</div>
-        
-        <!-- TypeScript Entry Point (module script) -->
-        <script type="module" src="./src/main.ts"></script>
-
-        <script>
-            // Hide the loading overlay once the Babylon engine is ready
-            window.addEventListener("DOMContentLoaded", () => {
-                const overlay = document.getElementById("loadingOverlay");
-                if (overlay) {
-                    overlay.style.transition = "opacity 0.5s ease";
-                    overlay.style.opacity = "0";
-                    setTimeout(() => overlay.remove(), 500);
-                }
-            })
-        </script>
-    </body>
 </html>
+
+<script type="module" src="./src/main.ts"></script>
