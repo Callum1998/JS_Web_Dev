@@ -2,9 +2,14 @@ import { Engine, Scene, Vector3, FreeCamera, HemisphericLight, MeshBuilder, Crea
 import "@babylonjs/loaders/glTF";
 
 function createCamera(scene: Scene, player: AbstractMesh){
-    const camera = new FreeCamera("chaseCam", new Vector3(0,5,-10), scene);
+    const camera = new FollowCamera("followCam", new Vector3(0,5,-10), scene);
 
     camera.lockedTarget = player;
+    camera.radius = 10;
+    camera.heightOffset = 4;
+    camera.rotationOffset = 0;      // angle around target
+    camera.cameraAcceleration = 0.05;
+    camera.maxCameraSpeed = 10;
 
     return camera;
 }
@@ -64,7 +69,7 @@ export async function createCharacterScene(engine: Engine) {
 
     interface SceneData {
         scene: Scene;
-        camera: FreeCamera;
+        camera: ArcRotateCamera;
         sunLight: DirectionalLight;
         shadowGen : ShadowGenerator;
         ground: Mesh;
@@ -89,11 +94,6 @@ export async function createCharacterScene(engine: Engine) {
 
     let camera = createCamera(that.scene, that.player);
 
-    const controller = new Mesh("playerController", that.scene);
-    controller.position.copyFrom(that.player.position);
-
-    that.player.parent = controller;
-
     let camVertical = 0;
     let camHorizontal = 0;
     var forwardOffset = -Math.PI;
@@ -103,23 +103,19 @@ export async function createCharacterScene(engine: Engine) {
 
         if (keyPress === "arrowup" || keyPress === "w") {
             camVertical = 1;
-            forwardOffset = Math.PI;
-            controller.rotation.y = 0;
+            forwardOffset = -Math.PI;
         }
         if (keyPress === "arrowdown" || keyPress === "s") {
             camVertical = -1;
             forwardOffset = Math.PI;
-            controller.rotation.y = forwardOffset;
         }
         if (keyPress === "arrowleft" || keyPress === "a") {
             camHorizontal = -1;
             forwardOffset = -Math.PI/2;
-            controller.rotation.y = forwardOffset;
         }
         if (keyPress === "arrowright" || keyPress === "d"){
             camHorizontal = 1;
             forwardOffset = Math.PI/2;
-            controller.rotation.y = forwardOffset;
         }
     });
 
@@ -139,19 +135,11 @@ export async function createCharacterScene(engine: Engine) {
         if (moveVector.lengthSquared() > 0) {
             // Rotate player to face movement direction
             // Note: Z is forward for most GLTF meshes
-            console.log("")
+            that.player.rotation.y = Math.atan2(moveVector.x, moveVector.z) + forwardOffset;
         }
 
         // Move the player
-        controller.moveWithCollisions(moveVector);
-
-        const followOffset = new Vector3(0, 5, -10);
-
-        // world position = player position + static offset (no rotation)
-        camera.position = controller.position.add(followOffset);
-
-        // Always look at player
-        camera.setTarget(controller.position);
+        that.player.moveWithCollisions(moveVector);
     });
 
 
